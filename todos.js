@@ -13,6 +13,10 @@ module.exports = [
   },
   {
     id: 4,
+    task: "Test note"
+  },
+  {
+    id: 5,
     task: "Lab 7-8 Nesterov Vadym KBm-24-1"
   },
 ];
