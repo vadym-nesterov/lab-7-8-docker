@@ -7,6 +7,6 @@ describe("GET /todos", () => {
     const response = await request.get("/todos");
 
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body.length).toBe(3);
+    expect(response.body.length).toBe(4);
   });
 });
