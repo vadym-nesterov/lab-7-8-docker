@@ -11,4 +11,9 @@ module.exports = [
     id: 3,
     task: "Wash the dishes",
   },
+  {
+    id: 4,
+    task: "Lab 7-8 Nesterov Vadym KBm-24-1"
+  },
 ];
+
