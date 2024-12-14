@@ -1,0 +1,46 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@2.2.0
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:18.0.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install-packages
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Run tests
+          command: npm run test
+  build-and-deploy-docker-image:
+    executor:
+      name: docker/docker
+      tag: "3.6"
+    steps:
+      - checkout
+      - docker/install-docker-tools
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and push Docker image
+          command: |
+            docker build -t nodedockerregistry.azurecr.io/mynodeimage:latest .
+            echo $DOCKER_PASS | docker login nodedockerregistry.azurecr.io -u $DOCKER_USER --password-stdin
+            docker push nodedockerregistry.azurecr.io/mynodeimage:latest
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build
+      - build-and-deploy-docker-image:
+          requires:
+            - build # only deploy once build job has completed
+
