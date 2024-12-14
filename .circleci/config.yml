@@ -32,9 +32,9 @@ jobs:
       - run:
           name: Build and push Docker image
           command: |
-            docker build -t nodedockerregistry.azurecr.io/mynodeimage:latest .
-            echo $DOCKER_PASS | docker login nodedockerregistry.azurecr.io -u $DOCKER_USER --password-stdin
-            docker push nodedockerregistry.azurecr.io/mynodeimage:latest
+            docker build -t nesterovregistry.azurecr.io/mynodeimage:latest .
+            echo $DOCKER_PASS | docker login nesterovregistry.azurecr.io -u $DOCKER_USER --password-stdin
+            docker push nesterovregistry.azurecr.io/mynodeimage:latest
 workflows:
   version: 2.1
   build:
